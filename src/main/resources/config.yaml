@@ -1,0 +1,28 @@
+appName: "OnlineShop"
+region: "testing"
+browser:
+  name: "chrome"
+  headless: "false"
+  ignoreSSL: "true"
+  size: "1900,1080"
+  downloads: "src/test/resources/downloads"
+  maxAppLoadingTimeInMinutes: 3
+  webElement:
+    timeout: 120
+    polling: 50
+environments:
+  - app: "testing"
+    appUrl: "https://automationexercise.com"
+    apiUrl: "https://automationexercise.com/api/"
+  - app: "staging"
+    appUrl: https://google.com
+    apiUrl: www.samplestage.org
+users:
+  - user: "automationuser"
+    username: "test"
+    email: "automation-ui@sampledomain.com"
+    password: "pass1723788968"
+  - user: "wrongcredentialsuser"
+    username: "test"
+    email: "wrong@sampledomain.com"
+    password: "wrong"
