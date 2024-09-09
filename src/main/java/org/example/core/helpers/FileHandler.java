@@ -15,12 +15,8 @@ import java.util.stream.Stream;
 
 import static org.awaitility.Awaitility.await;
 
-public class FileHandler {
 
-    @SneakyThrows
-    public String readFile(String fileName) {
-        return Files.readString(Path.of(Configuration.getDownloadPath() + "\\" + fileName), StandardCharsets.UTF_8);
-    }
+public class FileHandler {
 
     @SneakyThrows
     public static void waitForDownload(String fileName) {
@@ -29,6 +25,11 @@ public class FileHandler {
                 .atMost(Duration.ofMinutes(1))
                 .ignoreExceptions()
                 .until(() -> path.toFile().exists());
+    }
+
+    @SneakyThrows
+    public String readFile(String fileName) {
+        return Files.readString(Path.of(Configuration.getDownloadPath() + "\\" + fileName), StandardCharsets.UTF_8);
     }
 
     @SneakyThrows

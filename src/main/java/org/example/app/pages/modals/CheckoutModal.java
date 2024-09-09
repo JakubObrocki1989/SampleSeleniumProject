@@ -1,5 +1,6 @@
 package org.example.app.pages.modals;
 
+import io.qameta.allure.Step;
 import org.example.app.pages.LoginSignupPage;
 import org.example.core.base.BasePage;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ public class CheckoutModal extends BasePage {
         super(driver, element);
     }
 
+    @Step("Click register/login link")
     public LoginSignupPage clickRegisterLoginButton() {
         clickElement(registerLoginLink);
         return new LoginSignupPage(driver);

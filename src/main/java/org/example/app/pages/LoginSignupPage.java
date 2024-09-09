@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static io.qameta.allure.Allure.step;
 import static org.example.core.utils.ScreenshotTaker.takeScreenshot;
 
 public class LoginSignupPage extends BasePage {
@@ -33,7 +34,9 @@ public class LoginSignupPage extends BasePage {
         super(driver);
     }
 
+    @Step("Checking visibility of signup header")
     public boolean isSignupHeaderVisible() {
+        takeScreenshot("Signup header", driver);
         return isElementVisible(signupHeader);
     }
 
@@ -49,33 +52,48 @@ public class LoginSignupPage extends BasePage {
     public LoginSignupPage fillLogin(String email, String password) {
         sendKeys(loginEmailInput, email);
         sendKeys(loginPasswordInput, password);
+        takeScreenshot("Login", driver);
         return this;
     }
 
     @Step("Login")
     public HomePage clickLogin() {
+        highlight(loginButton);
+        takeScreenshot("Click login button", driver);
         clickElement(loginButton);
         return new HomePage(driver);
     }
 
     public LoginSignupPage clickSignup() {
-        clickElement(signupButton);
+        step("Click signup", () -> {
+            highlight(signupButton);
+            takeScreenshot("Click signup button", driver);
+            clickElement(signupButton);
+        });
         return this;
     }
 
+    @Step("Checking visibility of email exist message")
     public boolean isEmailExistMessageVisible() {
+        takeScreenshot("Email exist", driver);
         return isElementVisible(signupEmailExistErrorHeader);
     }
 
+    @Step("Getting email exist text")
     public String getEmailExistMessageText() {
+        takeScreenshot("Email exist", driver);
         return signupEmailExistErrorHeader.getText();
     }
 
+    @Step("Checking visibility of wrong credential message")
     public boolean isWrongCredentialsMessageVisible() {
+        takeScreenshot("Wrong credentials", driver);
         return isElementVisible(wrongCredentialsMessage);
     }
 
+    @Step("Getting wrong credentials text")
     public String getWrongCredentialsMessageText() {
+        takeScreenshot("Wrong credentials", driver);
         return wrongCredentialsMessage.getText();
     }
 }

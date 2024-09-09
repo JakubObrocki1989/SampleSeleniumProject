@@ -1,5 +1,6 @@
 package org.example.app.pages;
 
+import io.qameta.allure.Step;
 import org.example.app.models.ProductDetails;
 import org.example.app.pages.modals.CartModalPage;
 import org.example.core.base.BasePage;
@@ -11,7 +12,9 @@ import org.openqa.selenium.support.FindBy;
 import java.time.Duration;
 import java.util.List;
 
+import static io.qameta.allure.Allure.step;
 import static org.awaitility.Awaitility.await;
+import static org.example.core.utils.ScreenshotTaker.takeScreenshot;
 
 public class ProductsPage extends BasePage {
 
@@ -40,26 +43,34 @@ public class ProductsPage extends BasePage {
         return productsHeader.getText();
     }
 
+    @Step("Click on view product")
     public ProductPage clickOnViewProduct(int productIndex) {
         clickElement(productsList.get(productIndex).findElement(By.xpath(".//div[@class='choose']")));
         return new ProductPage(driver);
     }
 
+    @Step("Get product info")
     public ProductDetails getProductInfo(int productIndex) {
         ProductDetails.ProductDetailsBuilder productDetails = ProductDetails.builder();
         productDetails.name(productsList.get(productIndex).findElement(By.xpath(".//div[@class='productinfo text-center']/p")).getText());
         productDetails.price(productsList.get(productIndex).findElement(By.xpath(".//div[@class='productinfo text-center']/h2")).getText());
+        takeScreenshot("Product info", driver);
         return productDetails.build();
 
     }
 
+
     public CartModalPage addProductToCart(int productIndex) {
-        hoverOverElement(productsList.get(productIndex));
-        clickElement(productsList.get(productIndex).findElement(By.xpath(".//div[@class='product-overlay']//a")));
+        step("Add product to cart", () -> {
+            hoverOverElement(productsList.get(productIndex));
+            clickElement(productsList.get(productIndex).findElement(By.xpath(".//div[@class='product-overlay']//a")));
+            takeScreenshot("Add product", driver);
+        });
         WebElement modal = driver.findElement(By.className("modal-content"));
         return new CartModalPage(driver, modal);
     }
 
+    @Step("Add all visible products")
     public ProductsPage addAllVisibleProducts() {
         productsList.forEach(o -> {
             hoverOverElement(o);
@@ -70,21 +81,25 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    @Step("Search item")
     public ProductsPage searchItem(String itemName) {
         sendKeys(searchInput, itemName);
         clickElement(submitSearchButton);
         return this;
     }
 
+    @Step("Get products count")
     public int getProductCount() {
         return productsList.size();
     }
 
+    @Step("Open category")
     public ProductsPage openCategory(String categoryName) {
         clickElement(categoriesList.stream().filter(o -> o.getText().equals(categoryName)).findAny().get());
         return this;
     }
 
+    @Step("Open sub-category")
     public ProductsPage openSubCategory(String subCategoryName) {
         await()
                 .atMost(Duration.ofSeconds(5))
@@ -103,6 +118,7 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    @Step("Open brand")
     public ProductsPage openBrand(String brandName) {
         clickElement(brandsList.stream().filter(o -> o.getText().contains(brandName)).findAny().get());
         return this;

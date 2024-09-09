@@ -56,55 +56,73 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step("Checking menu option visibility")
     public boolean isMenuOptionVisible(String menuOption) {
         return shopMenu.stream().filter(o -> o.getText().equals(menuOption)).findFirst().get().isDisplayed();
     }
 
+    @Step("Getting subscription header text")
     public String getSubscriptionHeaderText() {
+        takeScreenshot("Subscription header", driver);
         return subscriptionHeader.getText();
     }
 
+    @Step("Subscribe")
     public HomePage subscribe(String email) {
         sendKeys(subscribeEmailInput, email);
         clickElement(subscribeButton);
         return this;
     }
 
+    @Step("Getting subscription success text")
     public String getSubscriptionSuccessText() {
+        takeScreenshot("Subscription success text", driver);
         return successSubscribeMessage.getText();
     }
 
+    @Step("Get product details")
     public ProductDetails getProductDetails() {
         ProductDetails.ProductDetailsBuilder productDetails = ProductDetails.builder();
         productDetails.name(recommendedItems.stream().filter(WebElement::isDisplayed).findFirst().get().findElement(By.xpath(".//p")).getText());
         productDetails.price(recommendedItems.stream().filter(WebElement::isDisplayed).findFirst().get().findElement(By.xpath(".//h2")).getText());
         highlight(recommendedItems.stream().filter(WebElement::isDisplayed).findFirst().get().findElement(By.xpath(".//p")));
         highlight(recommendedItems.stream().filter(WebElement::isDisplayed).findFirst().get().findElement(By.xpath(".//h2")));
+        takeScreenshot("Product details", driver);
         return productDetails.build();
     }
 
+    @Step("Add recommended item to cart")
     public CartModalPage addRecomenndedItemToCart() {
         clickElement(recommendedItems.stream().filter(WebElement::isDisplayed).findFirst().get().findElement(By.xpath(".//a[@class='btn btn-default add-to-cart']")));
         WebElement modal = driver.findElement(By.className("modal-content"));
+        takeScreenshot("Recommended item", driver);
         return new CartModalPage(driver, modal);
     }
 
+    @Step("Checking visibility of subscription header")
     public boolean isSubscriptionHeaderVisible() {
         scrollToElement(subscriptionHeader);
+        takeScreenshot("Subscription header", driver);
         return isElementVisible(subscriptionHeader);
     }
 
+    @Step("Checking visibility of full fledged header")
     public boolean isFullFledgedHeaderVisible() {
+        takeScreenshot("Full fledged header header", driver);
         return isElementVisible(fullFledgedHeader);
     }
 
+    @Step("Scroll up by arrow")
     public HomePage clickScrollUpArrow() {
         WebElement element = driver.findElement(By.id("scrollUp"));
         waitForElementToBeClickable(element);
+        highlight(element);
+        takeScreenshot("Click scroll up arrow", driver);
         clickElement(element);
         return this;
     }
 
+    @Step("Scroll to top")
     public HomePage scrollToTop() {
         scrollToElement(fullFledgedHeader);
         return this;

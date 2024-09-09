@@ -1,5 +1,6 @@
 package org.example.app.pages;
 
+import io.qameta.allure.Step;
 import org.example.app.models.CartItem;
 import org.example.app.pages.modals.CheckoutModal;
 import org.example.core.base.BasePage;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.awaitility.Awaitility.await;
+import static org.example.core.utils.ScreenshotTaker.takeScreenshot;
 
 public class CartPage extends BasePage {
 
@@ -31,6 +33,7 @@ public class CartPage extends BasePage {
         super(driver);
     }
 
+    @Step("Get cart items list")
     public List<CartItem> getCartItemList() {
         CartItem.CartItemBuilder cartItemsList = CartItem.builder();
         for (WebElement element : cartItems) {
@@ -40,27 +43,35 @@ public class CartPage extends BasePage {
             cartItemsList.totalPrice(element.findElement(By.xpath(".//td[@class='cart_total']/p")).getText());
             cartItemList.add(cartItemsList.build());
         }
+        takeScreenshot("Cart items", driver);
         return cartItemList;
     }
 
+    @Step("Proceed to checkout modal")
     public CheckoutModal proceedToCheckoutModal() {
         clickElement(proceedToCheckoutButton);
         WebElement modal = driver.findElement(By.className("modal-content"));
         return new CheckoutModal(driver, modal);
     }
 
+    @Step("Proceed to checkout")
     public CheckoutPage proceedToCheckout() {
         clickElement(proceedToCheckoutButton);
         return new CheckoutPage(driver);
     }
 
+    @Step("Get products count")
     public int getProductsCount() {
         List<WebElement> cartItems = driver.findElements(By.xpath("//a[@class='cart_quantity_delete']"));
+        takeScreenshot("Products count", driver);
         return cartItems.size();
     }
 
+    @Step("Delete product")
     public CartPage deleteProduct() {
         int listSize = getProductsCount();
+        highlight(deleteProductButtonList.get(0));
+        takeScreenshot("Delete product", driver);
         clickElement(deleteProductButtonList.get(0));
         await()
                 .atMost(Duration.ofSeconds(5))

@@ -42,7 +42,6 @@ public class Configuration {
     }
 
     public static Environment getEnvironment() {
-        System.setProperty("region", "testing");
         return configuration.getEnvironments().stream().filter(o -> o.getApp().equals(System.getProperty("region"))).collect(Collectors.toList()).get(0);
     }
 

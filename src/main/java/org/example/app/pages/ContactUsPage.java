@@ -1,10 +1,13 @@
 package org.example.app.pages;
 
+import io.qameta.allure.Step;
 import org.example.app.models.ContactMessage;
 import org.example.core.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static org.example.core.utils.ScreenshotTaker.takeScreenshot;
 
 public class ContactUsPage extends BasePage {
 
@@ -29,26 +32,34 @@ public class ContactUsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Checking visibility of get in touch header header")
     public boolean isGetInTouchHeaderVisible() {
+        takeScreenshot("Get in touch header", driver);
         return isElementVisible(getInTouchHeader);
     }
 
+    @Step("Getting get in touch header text")
     public String getGetInTouchHeaderText() {
+        takeScreenshot("Get in touch header", driver);
         return getInTouchHeader.getText();
     }
 
+    @Step("Fill contact us data")
     public ContactUsPage fillData(ContactMessage contactMessage) {
         sendKeys(nameInput, contactMessage.getName());
         sendKeys(emailInput, contactMessage.getEmail());
         sendKeys(subjectInput, contactMessage.getSubject());
         sendKeys(messageTextarea, contactMessage.getMessage());
         sendKeys(uploadFileInput, contactMessage.getFilePath());
+        takeScreenshot("Contact us form", driver);
         clickElement(submitButton, true);
         return this;
     }
 
+    @Step("Get success message text")
     public String getSuccessMessageText() {
         waitForPageToLoad();
+        takeScreenshot("Success message text", driver);
         return successMessage.getText();
     }
 }

@@ -16,8 +16,8 @@ public class BrowserActions {
     private static final BrowserConfig config = Configuration.getBrowserConfig();
     protected final WebDriver driver;
     protected final WebDriverWait wait;
-    Actions actions;
     protected JavascriptExecutor jse;
+    Actions actions;
 
     public BrowserActions(WebDriver webDriver) {
         this.driver = webDriver;
