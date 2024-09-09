@@ -1,6 +1,6 @@
 # Sample Selenium Automation Project
 
-Project cover test cases from https://www.automationexercise.com/test_cases
+Project cover UI test cases from https://www.automationexercise.com/test_cases
 
 - Page Object Pattern
 - Page Factory
