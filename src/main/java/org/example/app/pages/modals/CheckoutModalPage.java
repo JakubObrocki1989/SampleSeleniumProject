@@ -7,13 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CheckoutModal extends BasePage {
+public class CheckoutModalPage extends BasePage {
     @FindBy(xpath = "//div[@class='modal-footer']/button")
     WebElement continueOnCartButton;
     @FindBy(xpath = "//div[@class='modal-body']/p/a")
     WebElement registerLoginLink;
 
-    public CheckoutModal(WebDriver driver, WebElement element) {
+    public CheckoutModalPage(WebDriver driver, WebElement element) {
         super(driver, element);
     }
 
