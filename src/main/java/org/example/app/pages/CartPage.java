@@ -2,7 +2,7 @@ package org.example.app.pages;
 
 import io.qameta.allure.Step;
 import org.example.app.models.CartItem;
-import org.example.app.pages.modals.CheckoutModal;
+import org.example.app.pages.modals.CheckoutModalPage;
 import org.example.core.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -48,10 +48,10 @@ public class CartPage extends BasePage {
     }
 
     @Step("Proceed to checkout modal")
-    public CheckoutModal proceedToCheckoutModal() {
+    public CheckoutModalPage proceedToCheckoutModal() {
         clickElement(proceedToCheckoutButton);
         WebElement modal = driver.findElement(By.className("modal-content"));
-        return new CheckoutModal(driver, modal);
+        return new CheckoutModalPage(driver, modal);
     }
 
     @Step("Proceed to checkout")

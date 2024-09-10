@@ -66,6 +66,7 @@ public class BrowserActions {
     }
 
     public boolean isElementVisible(WebElement element) {
+        log.info("Checking visibility of {}", element.toString());
         waitForElementToBeDisplayed(element);
         return element.isDisplayed();
     }
