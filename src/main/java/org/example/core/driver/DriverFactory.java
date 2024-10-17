@@ -1,6 +1,5 @@
 package org.example.core.driver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.example.core.config.Configuration;
 import org.example.core.models.config.BrowserConfig;
@@ -8,7 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chromium.ChromiumOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -27,13 +29,12 @@ public class DriverFactory {
                     ChromeOptions chromeOptions = new ChromeOptions();
                     setupDownloadOptions(chromeOptions);
                     setupChromiumOptions(chromeOptions);
-                    WebDriverManager.chromedriver().setup();
                     driver.set(new ChromeDriver(chromeOptions));
                     break;
                 case "EDGE":
                     EdgeOptions edgeOptions = new EdgeOptions();
                     setupChromiumOptions(edgeOptions);
-//                    driver = new EdgeDriver(edgeOptions);
+                    driver.set(new EdgeDriver(edgeOptions));
                     break;
                 default:
                     throw new Exception("Browser {} is not supported yet.");
